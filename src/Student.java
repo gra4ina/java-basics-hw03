@@ -1,16 +1,30 @@
 public class Student {
-  int rating;
+  private int rating;
   private String name;
+  static int studentsCount = 0;
+  static double totalRating = 0;
 
-  // TODO implement Student class according to the instructions provided in the README.md file
+  public Student(){
+    studentsCount++;
+  }
 
   public Student(String name) {
-    //TODO initialize name
+    studentsCount++;
+    this.name = name;
+  }
+
+  public Student(int rating, String name) {
+    this.rating = rating;
+    this.name = name;
+    studentsCount++;
+    totalRating = totalRating + this.rating;
   }
 
   public static double getAvgRating() {
-    // TODO return average rating of all students
-    return 0;
+    if (studentsCount <= 0) {
+      System.out.println("Error, cannot find average rating with studentsCount <= 0 ");
+      return 0.0;
+    } else return totalRating / studentsCount;
   }
 
   public String getName() {
@@ -18,7 +32,7 @@ public class Student {
   }
 
   public void setName(String name) {
-    // TODO set student's name
+    this.name = name;
   }
 
   public int getRating() {
@@ -26,25 +40,29 @@ public class Student {
   }
 
   public void setRating(int rating) {
-    // TODO initialize rating;
+    this.rating = rating;
+    totalRating += this.rating;
   }
 
   public boolean betterStudent(Student student) {
-    // TODO return the result of comparing this.student's rating with the student's rating
-    return false;
+    return this.rating > student.rating;
   }
 
   public void changeRating(int rating) {
-    // TODO change this student's rating and average rating of all students
+    int diffRating = rating - this.rating;
+    this.rating = rating;
+    totalRating += diffRating;
   }
 
   public static void removeStudent(Student student) {
-    // TODO remove student
+    studentsCount--;
+    totalRating = totalRating - student.rating;
+    student.name = null;
+    student.rating = 0;
   }
 
   @Override
   public String toString() {
-    // TODO return String with name and rating of this student
-    return "";
+    return " " + this.name + ", rating " + this.rating;
   }
 }
